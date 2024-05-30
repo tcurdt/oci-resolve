@@ -54,7 +54,7 @@ func or(a string, b string) string {
 
 func resolve(image string, tag string) (string, error) {
 
-	fmt.Printf("resolving", image, tag)
+	fmt.Printf("resolving image%s tag=%s\n", image, tag)
 
 	hosts := []config.Host{
 		{
