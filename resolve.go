@@ -3,8 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"regexp"
-	"strings"
 
 	"github.com/regclient/regclient"
 	"github.com/regclient/regclient/config"
@@ -36,14 +34,14 @@ import (
 //		} `yaml:"rootfs"`
 //	}
 
-func extractTagFromComment(comment string) string {
-	re := regexp.MustCompile(`# tag:(\w+)`)
-	match := re.FindStringSubmatch(comment)
-	if len(match) == 2 {
-		return match[1]
-	}
-	return ""
-}
+// func extractTagFromComment(comment string) string {
+// 	re := regexp.MustCompile(`# tag:(\w+)`)
+// 	match := re.FindStringSubmatch(comment)
+// 	if len(match) == 2 {
+// 		return match[1]
+// 	}
+// 	return ""
+// }
 
 func or(a string, b string) string {
 	if a != "" {
@@ -52,18 +50,36 @@ func or(a string, b string) string {
 	return b
 }
 
-func resolve(image string, tag string) (string, error) {
+func resolveImages(registries []Registry, images []Image) (map[Image]string, error) {
+	results := map[Image]string{}
+	for _, image := range images {
+		sha, err := resolveImage(registries, image)
+		if err != nil {
+			return results, err
+		}
+		// fmt.Printf("%v => %s\n", image, sha)
+		results[image] = sha
+	}
+	return results, nil
+}
 
-	fmt.Printf("resolving image%s tag=%s\n", image, tag)
+func resolveImage(registries []Registry, image Image) (string, error) {
 
-	hosts := []config.Host{
-		{
-			Name: "ghcr.io",
-			User: "tcurdt",
-			Pass: "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",
+	var hosts []config.Host
+	for _, registry := range registries {
+		host := config.Host{
+			Name: registry.Name,
+			User: registry.User,
+			Pass: registry.Pass,
 			// ReqPerSec: 100,
 			// ReqConcurrent: 10,
-		},
+		}
+
+		// fmt.Printf("Name: %s\n", host.Name)
+		// fmt.Printf("User: %s\n", host.User)
+		// fmt.Printf("Pass: %s\n", host.Pass)
+
+		hosts = append(hosts, host)
 	}
 
 	ctx := context.Background()
@@ -77,15 +93,19 @@ func resolve(image string, tag string) (string, error) {
 	)
 
 	// regctl image inspect ghcr.io/aquasecurity/trivy:latest
-	r, err := ref.New("ghcr.io/tcurdt/test-project:live")
-	// r, err := ref.New("ghcr.io/aquasecurity/trivy:latest")
+
+	needle := image.String()
+
+	fmt.Printf("resolving image %s (name=%s tag=%s)\n", needle, image.Name, image.Tag)
+
+	r, err := ref.New(needle)
 	if err != nil {
-		return "", fmt.Errorf("Failed creating getRef: %v", err)
+		return "", fmt.Errorf("failed creating getRef: %v", err)
 	}
 
 	m, err := rc.ManifestGet(ctx, r)
 	if err != nil {
-		return "", fmt.Errorf("Failed running ManifestGet: %v", err)
+		return "", fmt.Errorf("failed running ManifestGet: %v", err)
 	}
 
 	// if manifest.GetMediaType(m) != types.MediaTypeDocker2Manifest {
@@ -136,59 +156,31 @@ func resolve(image string, tag string) (string, error) {
 		imageConfig.Config.Labels["SHA"],
 	)
 	if sha != "" {
-		fmt.Printf("sha = %s\n", sha)
 		return "commit-" + sha, nil
 	}
 
 	// don't change anything
 	fmt.Println("could not resolve. keeping as is")
 
-	return tag, nil
-
-	// var yamlDoc yaml.Node
-	// err = yaml.Unmarshal(body, &yamlDoc)
-	// if err != nil {
-	// 	return "", err
-	// }
-
-	// var out strings.Builder
-	// encoder := yaml.NewEncoder(&out)
-	// encoder.SetIndent(2)
-	// err = encoder.Encode(&yamlDoc)
-	// if err != nil {
-	// 	return "", err
-	// }
-	// fmt.Println(out.String())
-	// fmt.Printf("Out:\n%s\n", out.String())
-
-	// var yamlBytes bytes.Buffer
-	// yamlEncoder := yaml.NewEncoder(&yamlBytes)
-	// yamlEncoder.SetIndent(2)
-	// yamlEncoder.Encode(&yamlDoc)
-
-	// yamlBytes, err := yaml.Marshal(&yamlDoc)
-	// if err != nil {
-	// 	return "", err
-	// }
-	// fmt.Printf("Doc:\n%s\n", yamlBytes)
+	return image.Tag, nil
 }
 
-func modifyImageValue(value string, tag string) string {
+// func modifyImageValue(value string, tag string) string {
 
-	parts := strings.SplitN(value, ":", 2)
+// 	parts := strings.SplitN(value, ":", 2)
 
-	var image string
-	if len(parts) > 0 {
-		image = parts[0]
-	} else {
-		image = value
-	}
+// 	var image string
+// 	if len(parts) > 0 {
+// 		image = parts[0]
+// 	} else {
+// 		image = value
+// 	}
 
-	resolved, err := resolve(image, tag)
-	if err != nil {
-		fmt.Println(err)
-		return value
-	}
+// 	resolved, err := resolve(image, tag)
+// 	if err != nil {
+// 		fmt.Println(err)
+// 		return value
+// 	}
 
-	return image + ":" + resolved
-}
+// 	return image + ":" + resolved
+// }

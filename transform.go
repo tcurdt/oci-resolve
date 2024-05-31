@@ -43,13 +43,13 @@ func processMappingNodeWithComments(node *yaml.Node) {
 
 				if len(valueNode.LineComment) > 0 {
 
-					comment := string(valueNode.LineComment)
+					// comment := string(valueNode.LineComment)
 
-					tag := extractTagFromComment(comment)
-					if tag != "" {
-						fmt.Println("found tag:", tag)
-						valueNode.Value = modifyImageValue(valueNode.Value, tag)
-					}
+					// tag := extractTagFromComment(comment)
+					// if tag != "" {
+					// 	fmt.Println("found tag:", tag)
+					// 	valueNode.Value = modifyImageValue(valueNode.Value, tag)
+					// }
 
 				}
 			}
