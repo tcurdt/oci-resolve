@@ -1,8 +1,12 @@
 name: ci
 
 on:
-  - push
-  - pull_request
+  pull_request:
+  push:
+    branches:
+      - "*"
+    # tags-ignore:
+    #   - "v*"
 
 jobs:
   test:

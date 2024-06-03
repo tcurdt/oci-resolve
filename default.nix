@@ -13,11 +13,26 @@
 }:
 
 buildGoApplication {
-  pname = "oci-resolve";
-  version = "0.1";
+  pname = "release-go";
+  version = "__VERSION__";
   pwd = ./.;
   src = ./.;
   modules = ./gomod2nix.toml;
 
-  # ldflags = [ "-s" "-w" "-X github.com/tcurdt/oci-resolve/util.Version=${version}" ];
+  # ldflags = [ "-s" "-w" "-X github.com/tcurdt/release-go/util.Version=${version}" ];
+
+  # postInstall = ''
+  #   install -Dm644 ${dist}/init/caddy.service ${dist}/init/caddy-api.service -t $out/lib/systemd/system
+
+  #   substituteInPlace $out/lib/systemd/system/caddy.service --replace "/usr/bin/caddy" "$out/bin/caddy"
+  #   substituteInPlace $out/lib/systemd/system/caddy-api.service --replace "/usr/bin/caddy" "$out/bin/caddy"
+
+  #   $out/bin/caddy manpage --directory manpages
+  #   installManPage manpages/*
+
+  #   installShellCompletion --cmd caddy \
+  #     --bash <($out/bin/caddy completion bash) \
+  #     --fish <($out/bin/caddy completion fish) \
+  #     --zsh <($out/bin/caddy completion zsh)
+  # '';
 }
