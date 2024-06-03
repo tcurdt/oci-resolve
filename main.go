@@ -90,21 +90,21 @@ func main() {
 	case args.Resolve != nil:
 		registries, err := parseRegistries(args.Resolve.RegistryFiles)
 		if err != nil {
-			fmt.Printf("error parsing registries: %v\n", err)
+			LogError("error parsing registries: %v", err)
 			os.Exit(1)
 		}
 		images, err := parseImages(args.Resolve.Images)
 		if err != nil {
-			fmt.Printf("error parsing images: %v\n", err)
+			LogError("error parsing images: %v", err)
 			os.Exit(1)
 		}
-		fmt.Printf("registries: %v\n", registries)
-		fmt.Printf("images: %v\n", images)
-		fmt.Printf("output: %s\n", args.Resolve.Output)
+		LogInfo("registries: %v", registries)
+		LogInfo("images: %v", images)
+		LogInfo("output: %s", args.Resolve.Output)
 
 		resolved, err := resolveImages(registries, images)
 		if err != nil {
-			fmt.Printf("error resolving images: %v\n", err)
+			LogError("error resolving images: %v", err)
 			os.Exit(1)
 		}
 		if args.Resolve.Output == "kustomize" {
@@ -112,11 +112,11 @@ func main() {
 			return
 		}
 
-		fmt.Println("unknown output format", args.Resolve.Output)
+		LogError("unknown output format", args.Resolve.Output)
 		os.Exit(1)
 
 	default:
-		fmt.Println("unknown command")
+		LogError("unknown command")
 		os.Exit(1)
 	}
 }

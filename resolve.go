@@ -96,7 +96,7 @@ func resolveImage(registries []Registry, image Image) (string, error) {
 
 	needle := image.String()
 
-	fmt.Printf("resolving image %s (name=%s tag=%s)\n", needle, image.Name, image.Tag)
+	LogInfo("resolving image %s (name=%s tag=%s)", needle, image.Name, image.Tag)
 
 	r, err := ref.New(needle)
 	if err != nil {
@@ -160,7 +160,7 @@ func resolveImage(registries []Registry, image Image) (string, error) {
 	}
 
 	// don't change anything
-	fmt.Println("could not resolve. keeping as is")
+	LogError("could not resolve. keeping as is")
 
 	return image.Tag, nil
 }
