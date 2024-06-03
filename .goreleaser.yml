@@ -42,7 +42,7 @@ snapshot:
 nfpms:
   - homepage: https://github.com/tcurdt/{{ .ProjectName }}
     description: |-
-      Some foo package
+      Resolve OCI image version
     maintainer: Torsten Curdt <tcurdt@vafer.org>
     license: Apache
     vendor: tcurdt
@@ -68,21 +68,21 @@ nfpms:
     # recommends:
     #   - golang
 
-brews:
-  - repository:
-      owner: tcurdt
-      name: homebrew-tap
-    folder: Formula
-    homepage: https://github.com/tcurdt/{{ .ProjectName }}
-    description: |
-      The description of the project
-    license: Apache
-    # dependencies:
-    #   - name: git
-    # conflicts:
-    #   - svn
-    # test: |
-    #   system "#{bin}/oci-release -v"
+# brews:
+#   - repository:
+#       owner: tcurdt
+#       name: homebrew-tap
+#     folder: Formula
+#     homepage: https://github.com/tcurdt/{{ .ProjectName }}
+#     description: |
+#       The description of the project
+#     license: Apache
+#     # dependencies:
+#     #   - name: git
+#     # conflicts:
+#     #   - svn
+#     # test: |
+#     #   system "#{bin}/oci-release -v"
 
 # https://github.com/nix-community/NUR
 # nix:
@@ -99,35 +99,35 @@ brews:
 #     #   installShellCompletion ./completions/*
 
 # docker context use default
-dockers:
-  - image_templates:
-    - "tcurdt/{{ .ProjectName }}:latest"
-    - "tcurdt/{{ .ProjectName }}:v{{ .Version }}"
-    - "tcurdt/{{ .ProjectName }}:v{{ .Major }}"
-    # - "gcr.io/tcurdt/{{ .ProjectName }}:latest"
-    build_flag_templates:
-    - "--label=sha={{.FullCommit}}"
-    - "--label=org.opencontainers.image.created={{.Date}}"
-    - "--label=org.opencontainers.image.title={{.ProjectName}}"
-    - "--label=org.opencontainers.image.revision={{.FullCommit}}"
-    - "--label=org.opencontainers.image.version={{.Version}}"
-    - "--pull"
-    - "--platform=linux/amd64"
-    use: buildx
-  # - image_templates:
-  #   - "tcurdt/{{ .ProjectName }}:latest"
-  #   - "tcurdt/{{ .ProjectName }}:v{{ .Version }}"
-  #   - "tcurdt/{{ .ProjectName }}:v{{ .Major }}"
-  #   # - "gcr.io/tcurdt/{{ .ProjectName }}:latest"
-  #   build_flag_templates:
-  #   - "--label=sha={{.FullCommit}}"
-  #   - "--label=org.opencontainers.image.created={{.Date}}"
-  #   - "--label=org.opencontainers.image.title={{.ProjectName}}"
-  #   - "--label=org.opencontainers.image.revision={{.FullCommit}}"
-  #   - "--label=org.opencontainers.image.version={{.Version}}"
-  #   - "--pull"
-  #   - "--platform=linux/arm64"
-  #   use: buildx
+# dockers:
+#   - image_templates:
+#     - "tcurdt/{{ .ProjectName }}:latest"
+#     - "tcurdt/{{ .ProjectName }}:v{{ .Version }}"
+#     - "tcurdt/{{ .ProjectName }}:v{{ .Major }}"
+#     # - "gcr.io/tcurdt/{{ .ProjectName }}:latest"
+#     build_flag_templates:
+#     - "--label=sha={{.FullCommit}}"
+#     - "--label=org.opencontainers.image.created={{.Date}}"
+#     - "--label=org.opencontainers.image.title={{.ProjectName}}"
+#     - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+#     - "--label=org.opencontainers.image.version={{.Version}}"
+#     - "--pull"
+#     - "--platform=linux/amd64"
+#     use: buildx
+#   - image_templates:
+#     - "tcurdt/{{ .ProjectName }}:latest"
+#     - "tcurdt/{{ .ProjectName }}:v{{ .Version }}"
+#     - "tcurdt/{{ .ProjectName }}:v{{ .Major }}"
+#     # - "gcr.io/tcurdt/{{ .ProjectName }}:latest"
+#     build_flag_templates:
+#     - "--label=sha={{.FullCommit}}"
+#     - "--label=org.opencontainers.image.created={{.Date}}"
+#     - "--label=org.opencontainers.image.title={{.ProjectName}}"
+#     - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+#     - "--label=org.opencontainers.image.version={{.Version}}"
+#     - "--pull"
+#     - "--platform=linux/arm64"
+#     use: buildx
 
 release:
   name_template: "v{{ .Version }}"
