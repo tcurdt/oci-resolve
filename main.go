@@ -112,7 +112,7 @@ func main() {
 			return
 		}
 
-		LogError("unknown output format", args.Resolve.Output)
+		LogError("unknown output format: %v", args.Resolve.Output)
 		os.Exit(1)
 
 	default:
