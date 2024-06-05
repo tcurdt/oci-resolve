@@ -103,7 +103,7 @@ nfpms:
 # docker buildx build -t testimage:arm64 . --platform=linux/arm64
 dockers:
   - image_templates:
-      - "gcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-amd64"
+      - "ghcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-amd64"
     dockerfile: .goreleaser.Dockerfile
     use: buildx
     build_flag_templates:
@@ -115,7 +115,7 @@ dockers:
       - "--pull"
       - "--platform=linux/amd64"
   - image_templates:
-      - "gcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-arm64"
+      - "ghcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-arm64"
     dockerfile: .goreleaser.Dockerfile
     use: buildx
     build_flag_templates:
@@ -128,18 +128,18 @@ dockers:
       - "--platform=linux/arm64"
 
 docker_manifests:
-  - name_template: 'gcr.io/tcurdt/{{ .ProjectName }}:latest'
+  - name_template: 'ghcr.io/tcurdt/{{ .ProjectName }}:latest'
     image_templates:
-    - 'gcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-amd64'
-    - 'gcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-arm64'
-  - name_template: 'gcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}'
+    - 'ghcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-amd64'
+    - 'ghcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-arm64'
+  - name_template: 'ghcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}'
     image_templates:
-    - 'gcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-amd64'
-    - 'gcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-arm64'
-  - name_template: 'gcr.io/tcurdt/{{ .ProjectName }}:v{{ .Major }}'
+    - 'ghcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-amd64'
+    - 'ghcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-arm64'
+  - name_template: 'ghcr.io/tcurdt/{{ .ProjectName }}:v{{ .Major }}'
     image_templates:
-    - 'gcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-amd64'
-    - 'gcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-arm64'
+    - 'ghcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-amd64'
+    - 'ghcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-arm64'
 
 
 release:
