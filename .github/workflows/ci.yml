@@ -37,6 +37,9 @@ jobs:
       - name: Test
         run: go test ./...
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
       - name: Release Test
         uses: goreleaser/goreleaser-action@v5
         with:
