@@ -7,14 +7,10 @@ on:
 
 permissions:
   contents: write
-  # packages: write
-  # issues: write
 
 jobs:
   release:
     runs-on: ubuntu-latest
-    # env:
-    #   DOCKER_CLI_EXPERIMENTAL: "enabled"
     steps:
 
       - name: Checkout
@@ -22,22 +18,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      # - name: Fetch Tags
-      #   run: git fetch --force --tags
-
-      - name: Setup Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: stable
-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
-
-      # - name: Docker Login
-      #   env:
-      #     DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-      #     DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-      #   run: echo -n ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
 
       - name: Release
         uses: goreleaser/goreleaser-action@v6
