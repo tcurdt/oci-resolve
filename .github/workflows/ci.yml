@@ -43,4 +43,4 @@ jobs:
       - name: Release Test
         uses: goreleaser/goreleaser-action@v6
         with:
-          args: release --clean --skip-validate --skip-publish
+          args: release --clean --skip=announce,publish,validate
