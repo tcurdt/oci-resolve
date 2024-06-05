@@ -38,6 +38,6 @@ jobs:
         run: go test ./...
 
       - name: Release Test
-        uses: goreleaser/goreleaser-action@v5
+        uses: goreleaser/goreleaser-action@v6
         with:
           args: release --clean --skip-validate --skip-publish
