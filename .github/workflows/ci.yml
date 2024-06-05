@@ -24,6 +24,8 @@ jobs:
 
     - name: Checkout
       uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
     - name: Setup Go
       uses: actions/setup-go@v5
@@ -35,3 +37,8 @@ jobs:
 
     - name: Test
       run: go test ./...
+
+    - name: Release Test
+      uses: goreleaser/goreleaser-action@v5
+      with:
+        args: release --clean --skip-validate --skip-publish

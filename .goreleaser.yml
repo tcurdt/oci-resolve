@@ -99,35 +99,46 @@ nfpms:
 #     #   installShellCompletion ./completions/*
 
 # docker context use default
-# dockers:
-#   - image_templates:
-#     - "tcurdt/{{ .ProjectName }}:latest"
-#     - "tcurdt/{{ .ProjectName }}:v{{ .Version }}"
-#     - "tcurdt/{{ .ProjectName }}:v{{ .Major }}"
-#     # - "gcr.io/tcurdt/{{ .ProjectName }}:latest"
-#     build_flag_templates:
-#     - "--label=sha={{.FullCommit}}"
-#     - "--label=org.opencontainers.image.created={{.Date}}"
-#     - "--label=org.opencontainers.image.title={{.ProjectName}}"
-#     - "--label=org.opencontainers.image.revision={{.FullCommit}}"
-#     - "--label=org.opencontainers.image.version={{.Version}}"
-#     - "--pull"
-#     - "--platform=linux/amd64"
-#     use: buildx
-#   - image_templates:
-#     - "tcurdt/{{ .ProjectName }}:latest"
-#     - "tcurdt/{{ .ProjectName }}:v{{ .Version }}"
-#     - "tcurdt/{{ .ProjectName }}:v{{ .Major }}"
-#     # - "gcr.io/tcurdt/{{ .ProjectName }}:latest"
-#     build_flag_templates:
-#     - "--label=sha={{.FullCommit}}"
-#     - "--label=org.opencontainers.image.created={{.Date}}"
-#     - "--label=org.opencontainers.image.title={{.ProjectName}}"
-#     - "--label=org.opencontainers.image.revision={{.FullCommit}}"
-#     - "--label=org.opencontainers.image.version={{.Version}}"
-#     - "--pull"
-#     - "--platform=linux/arm64"
-#     use: buildx
+# docker buildx build -t testimage:amd64 . --platform=linux/amd64
+# docker buildx build -t testimage:arm64 . --platform=linux/arm64
+dockers:
+  - image_templates:
+    - "gcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-amd64"
+    build_flag_templates:
+    - "--label=sha={{.FullCommit}}"
+    - "--label=org.opencontainers.image.created={{.Date}}"
+    - "--label=org.opencontainers.image.title={{.ProjectName}}"
+    - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+    - "--label=org.opencontainers.image.version={{.Version}}"
+    - "--pull"
+    - "--platform=linux/amd64"
+    use: buildx
+  - image_templates:
+    - "gcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-arm64"
+    build_flag_templates:
+    - "--label=sha={{.FullCommit}}"
+    - "--label=org.opencontainers.image.created={{.Date}}"
+    - "--label=org.opencontainers.image.title={{.ProjectName}}"
+    - "--label=org.opencontainers.image.revision={{.FullCommit}}"
+    - "--label=org.opencontainers.image.version={{.Version}}"
+    - "--pull"
+    - "--platform=linux/arm64"
+    use: buildx
+
+docker_manifests:
+  - name_template: 'gcr.io/tcurdt/{{ .ProjectName }}:latest'
+    image_templates:
+    - 'gcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-amd64'
+    - 'gcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-arm64'
+  - name_template: 'gcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}'
+    image_templates:
+    - 'gcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-amd64'
+    - 'gcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-arm64'
+  - name_template: 'gcr.io/tcurdt/{{ .ProjectName }}:v{{ .Major }}'
+    image_templates:
+    - 'gcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-amd64'
+    - 'gcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-arm64'
+
 
 release:
   name_template: "v{{ .Version }}"

@@ -54,6 +54,18 @@ func parseRegistries(filenames []string) ([]Registry, error) {
 
 		registries = append(registries, registry)
 	}
+
+	name := os.Getenv("REGISTRY_NAME")
+	if name != "" {
+		user := os.Getenv("REGISTRY_USER")
+		pass := os.Getenv("REGISTRY_PASS")
+		registries = append(registries, Registry{
+	    	Name: name,
+	    	User: user,
+	    	Pass: pass,
+		})
+	}
+
 	return registries, nil
 }
 
@@ -73,6 +85,7 @@ func parseImages(values []string) ([]Image, error) {
 
 		images = append(images, Image{Name: name, Tag: tag})
 	}
+
 	return images, nil
 }
 
