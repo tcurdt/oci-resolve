@@ -11,7 +11,7 @@ FROM scratch
 
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /app/passwd /etc/passwd
-COPY --from=builder /app/oci-resolve /bin/oci-resolve
+COPY --from=builder /app/oci-resolve /usr/local/bin/oci-resolve
 USER nobody
-WORKDIR /app
-CMD ["/bin/oci-resolve"]
+WORKDIR /
+CMD ["/usr/local/bin/oci-resolve"]
