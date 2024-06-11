@@ -95,7 +95,7 @@ func resolveImage(registries []Registry, image Image) (string, error) {
 
 	needle := image.String()
 
-	LogInfo("resolving image %s (name=%s tag=%s)", needle, image.Name, image.Tag)
+	LogInfo("resolving image [%s] (name=%s tag=%s)", needle, image.Name, image.Tag)
 
 	r, err := ref.New(needle)
 	if err != nil {

@@ -61,12 +61,14 @@ func (c *HashTransformer) processMappingNode(node *yaml.Node, path []string) err
 
 			fullPath := append(path, keyNode.Value)
 
+			_ = fullPath
+
 			if keyNode.Kind == yaml.ScalarNode && keyNode.Value == "name" {
-				fmt.Printf("found %v: %s\n", fullPath, valueNode.Value)
+				// LogDebug("found %v: %s\n", fullPath, valueNode.Value)
 			}
 
 			if keyNode.Kind == yaml.ScalarNode && keyNode.Value == "app" {
-				fmt.Printf("found %v: %s\n", fullPath, valueNode.Value)
+				// LogDebug("found %v: %s\n", fullPath, valueNode.Value)
 			}
 
 			err := c.processNode(valueNode, append(path, keyNode.Value))
