@@ -57,7 +57,6 @@ func resolveImages(registries []Registry, images []Image) (map[Image]string, err
 		if err != nil {
 			return results, err
 		}
-		// fmt.Printf("%v => %s\n", image, sha)
 		results[image] = sha
 	}
 	return results, nil
@@ -159,28 +158,5 @@ func resolveImage(registries []Registry, image Image) (string, error) {
 		return "commit-" + sha, nil
 	}
 
-	// don't change anything
-	LogError("could not resolve. keeping as is")
-
-	return image.Tag, nil
+	return "", fmt.Errorf("could not resolve image %s", needle)
 }
-
-// func modifyImageValue(value string, tag string) string {
-
-// 	parts := strings.SplitN(value, ":", 2)
-
-// 	var image string
-// 	if len(parts) > 0 {
-// 		image = parts[0]
-// 	} else {
-// 		image = value
-// 	}
-
-// 	resolved, err := resolve(image, tag)
-// 	if err != nil {
-// 		fmt.Println(err)
-// 		return value
-// 	}
-
-// 	return image + ":" + resolved
-// }

@@ -1,41 +1,17 @@
 package main
 
 import (
-	"fmt"
+	"io"
 	"io/ioutil"
+	"os"
+	"path/filepath"
 	"strings"
 
 	yaml "gopkg.in/yaml.v3"
 )
 
-func processFiles(inputPath string, outputPath string) error {
-	files, err := ioutil.ReadDir(inputPath)
-	if err != nil {
-		return err
-	}
-
-	for _, file := range files {
-
-		if file.IsDir() {
-			processFiles(fmt.Sprintf("%s/%s", inputPath, file.Name()), outputPath)
-			continue
-		}
-
-		if strings.HasSuffix(file.Name(), ".yaml") || strings.HasSuffix(file.Name(), ".yml") {
-			filePath := fmt.Sprintf("%s/%s", inputPath, file.Name())
-			err := processFile(filePath, outputPath)
-			if err != nil {
-				fmt.Printf("error processing file %s: %v\n", filePath, err)
-			}
-		}
-	}
-
-	return nil
-}
-
-func processFile(filePath string, outputPath string) error {
-
-	content, err := ioutil.ReadFile(filePath)
+func processFile(filename string, consumers []Consumer) error {
+	content, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return err
 	}
@@ -44,32 +20,36 @@ func processFile(filePath string, outputPath string) error {
 
 	for {
 		var doc yaml.Node
-		err := decoder.Decode(&doc)
-		if err != nil {
-			if err.Error() == "EOF" {
+		if err := decoder.Decode(&doc); err != nil {
+			if err == io.EOF {
 				break
 			}
-			fmt.Printf("error decoding YAML: %v\n", err)
 			return err
 		}
-		processNode(&doc)
+		for _, consumer := range consumers {
+			if err := consumer.Consume(filename, &doc); err != nil {
+				return err
+			}
+		}
 	}
 
-	// var yamlDoc yaml.Node
-	// err = yaml.Unmarshal(content, &yamlDoc)
-	// if err != nil {
-	// 	return err
-	// }
-
-	// updatedContent, err := yaml.Marshal(&yamlDoc)
-	// if err != nil {
-	// 	return err
-	// }
-
-	// err = ioutil.WriteFile(filePath, updatedContent, 0644)
-	// if err != nil {
-	// 	return err
-	// }
-
 	return nil
+}
+
+func traversePath(dir string, consumers []Consumer) error {
+	return filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		if info.IsDir() {
+			return nil
+		}
+		if strings.HasSuffix(path, ".yaml") || strings.HasSuffix(path, ".yml") {
+			err := processFile(path, consumers)
+			if err != nil {
+				return err
+			}
+		}
+		return nil
+	})
 }

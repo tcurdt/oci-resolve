@@ -1,60 +1,25 @@
 package main
 
 import (
-	"fmt"
-
-	"gopkg.in/yaml.v3"
+	yaml "gopkg.in/yaml.v3"
 )
 
-func processNode(node *yaml.Node) {
-	if node == nil {
-		return
-	}
-
-	switch node.Kind {
-	case yaml.DocumentNode:
-		processNode(node.Content[0])
-	case yaml.MappingNode:
-		processMappingNodeWithComments(node)
-	case yaml.ScalarNode:
-	case yaml.SequenceNode:
-		for _, contentNode := range node.Content {
-			processNode(contentNode)
-		}
-	default:
-		fmt.Println("unexpected node kind:", node.Kind)
-	}
-
+type Consumer interface {
+	Consume(filePath string, doc *yaml.Node) error
 }
 
-func processMappingNodeWithComments(node *yaml.Node) {
-	if node == nil || node.Kind != yaml.MappingNode {
-		return
-	}
-
-	if len(node.Content) > 1 {
-		for i := 0; i < len(node.Content)-1; i += 2 {
-			keyNode := node.Content[i]
-			valueNode := node.Content[i+1]
-
-			if keyNode.Kind == yaml.ScalarNode && keyNode.Value == "image" {
-
-				fmt.Printf("found image: %s (%s)\n", valueNode.Value, valueNode.LineComment)
-
-				if len(valueNode.LineComment) > 0 {
-
-					// comment := string(valueNode.LineComment)
-
-					// tag := extractTagFromComment(comment)
-					// if tag != "" {
-					// 	fmt.Println("found tag:", tag)
-					// 	valueNode.Value = modifyImageValue(valueNode.Value, tag)
-					// }
-
+func extractKind(doc *yaml.Node) string {
+	if doc.Kind == yaml.DocumentNode && len(doc.Content) > 0 {
+		root := doc.Content[0]
+		if root.Kind == yaml.MappingNode {
+			for i := 0; i < len(root.Content); i += 2 {
+				keyNode := root.Content[i]
+				valueNode := root.Content[i+1]
+				if keyNode.Kind == yaml.ScalarNode && keyNode.Value == "kind" {
+					return valueNode.Value
 				}
 			}
-
-			processNode(valueNode)
 		}
 	}
+	return ""
 }

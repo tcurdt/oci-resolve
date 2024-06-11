@@ -25,7 +25,8 @@ spec:
     spec:
       containers:
         - name: echo1
-          image: hashicorp/http-echo:latest # tag:latest
+          # image: hashicorp/http-echo:latest
+          image: ghcr.io/tcurdt/test-project:latest # resolve
           args:
             - "-text=echo1"
           ports:
