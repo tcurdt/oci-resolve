@@ -4,7 +4,7 @@ go 1.22
 
 require (
 	github.com/alexflint/go-arg v1.5.1
-	github.com/regclient/regclient v0.7.0
+	github.com/regclient/regclient v0.7.1
 	gopkg.in/yaml.v3 v3.0.1
 )
 
