@@ -150,9 +150,12 @@ func resolveImage(registries []Registry, image Image) (string, error) {
 	// 	return "", err
 	// }
 
+	// LogDebug("SHA", imageConfig.Config.Labels["SHA"])
+	// LogDebug("org.opencontainers.image.revision", imageConfig.Config.Labels["org.opencontainers.image.revision"])
+
 	sha := or(
-		imageConfig.Config.Labels["org.opencontainers.image.revision"],
 		imageConfig.Config.Labels["SHA"],
+		imageConfig.Config.Labels["org.opencontainers.image.revision"],
 	)
 	if sha != "" {
 		return "commit-" + sha, nil
