@@ -33,6 +33,8 @@ github.com/regclient/regclient v0.8.0 h1:xNAMDlADcyMvFAlGXoqDOxlSUBG4mqWBFgjQqVT
 github.com/regclient/regclient v0.8.0/go.mod h1:h9+Y6dBvqBkdlrj6EIhbTOv0xUuIFl7CdI1bZvEB42g=
 github.com/regclient/regclient v0.8.1 h1:ZnEZHhdl8ZjLTerTxLL411IVIlNQQhrXzXs9xANEvic=
 github.com/regclient/regclient v0.8.1/go.mod h1:uGyetv0o6VLyRDjtfeBqp/QBwRLJ3Hcn07/+8QbhNcM=
+github.com/regclient/regclient v0.8.2 h1:23BQ3jWgKYHHIXUhp/S9laVJDHDoOQaQCzXMJ4undVE=
+github.com/regclient/regclient v0.8.2/go.mod h1:uGyetv0o6VLyRDjtfeBqp/QBwRLJ3Hcn07/+8QbhNcM=
 github.com/sirupsen/logrus v1.9.3 h1:dueUQJ1C2q9oE3F7wvmSGAaVtTmUizReu6fjN8uqzbQ=
 github.com/sirupsen/logrus v1.9.3/go.mod h1:naHLuLoDiP4jHNo9R0sCBMtWGeIprob74mVsIT4qYEQ=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
