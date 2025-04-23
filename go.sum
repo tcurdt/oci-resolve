@@ -15,6 +15,8 @@ github.com/klauspost/compress v1.17.9 h1:6KIumPrER1LHsvBVuDa0r5xaG0Es51mhhB9BQB2
 github.com/klauspost/compress v1.17.9/go.mod h1:Di0epgTjJY877eYKx5yC51cX2A2Vl2ibi7bDH9ttBbw=
 github.com/klauspost/compress v1.17.11 h1:In6xLpyWOi1+C7tXUUWv2ot1QvBjxevKAaI6IXrJmUc=
 github.com/klauspost/compress v1.17.11/go.mod h1:pMDklpSncoRMuLFrf1W9Ss9KT+0rH90U12bZKk7uwG0=
+github.com/klauspost/compress v1.18.0 h1:c/Cqfb0r+Yi+JtIEq73FWXVkRonBlf0CRNYc8Zttxdo=
+github.com/klauspost/compress v1.18.0/go.mod h1:2Pp+KzxcywXVXMr50+X0Q/Lsb43OQHYWRCY2AiWywWQ=
 github.com/olareg/olareg v0.1.0 h1:1dXBOgPrig5N7zoXyIZVQqU0QBo6sD9pbL6UYjY75CA=
 github.com/olareg/olareg v0.1.0/go.mod h1:RBuU7JW7SoIIxZKzLRhq8sVtQeAHzCAtRrXEBx2KlM4=
 github.com/opencontainers/go-digest v1.0.0 h1:apOUWs51W5PlhuyGyz9FCeeBIOUDA/6nW8Oi/yOhh5U=
@@ -35,6 +37,8 @@ github.com/regclient/regclient v0.8.1 h1:ZnEZHhdl8ZjLTerTxLL411IVIlNQQhrXzXs9xAN
 github.com/regclient/regclient v0.8.1/go.mod h1:uGyetv0o6VLyRDjtfeBqp/QBwRLJ3Hcn07/+8QbhNcM=
 github.com/regclient/regclient v0.8.2 h1:23BQ3jWgKYHHIXUhp/S9laVJDHDoOQaQCzXMJ4undVE=
 github.com/regclient/regclient v0.8.2/go.mod h1:uGyetv0o6VLyRDjtfeBqp/QBwRLJ3Hcn07/+8QbhNcM=
+github.com/regclient/regclient v0.8.3 h1:AFAPu/vmOYGyY22AIgzdBUKbzH+83lEpRioRYJ/reCs=
+github.com/regclient/regclient v0.8.3/go.mod h1:gjQh5uBVZoo/CngchghtQh9Hx81HOMKRRDd5WPcPkbk=
 github.com/sirupsen/logrus v1.9.3 h1:dueUQJ1C2q9oE3F7wvmSGAaVtTmUizReu6fjN8uqzbQ=
 github.com/sirupsen/logrus v1.9.3/go.mod h1:naHLuLoDiP4jHNo9R0sCBMtWGeIprob74mVsIT4qYEQ=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
