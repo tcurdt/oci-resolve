@@ -36,10 +36,10 @@ metadata:
   mod_timestamp: "{{ .CommitTimestamp }}"
 
 archives:
-  - format: zip
+  - formats: zip
 
 snapshot:
-  name_template: "{{ incpatch .Version }}-dev"
+  version_template: "{{ incpatch .Version }}-dev"
 
 nfpms:
   - homepage: https://github.com/tcurdt/{{ .ProjectName }}
@@ -132,19 +132,18 @@ dockers:
       - "--platform=linux/arm64"
 
 docker_manifests:
-  - name_template: 'ghcr.io/tcurdt/{{ .ProjectName }}:latest'
+  - name_template: "ghcr.io/tcurdt/{{ .ProjectName }}:latest"
     image_templates:
-    - 'ghcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-amd64'
-    - 'ghcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-arm64'
-  - name_template: 'ghcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}'
+      - "ghcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-amd64"
+      - "ghcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-arm64"
+  - name_template: "ghcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}"
     image_templates:
-    - 'ghcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-amd64'
-    - 'ghcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-arm64'
-  - name_template: 'ghcr.io/tcurdt/{{ .ProjectName }}:v{{ .Major }}'
+      - "ghcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-amd64"
+      - "ghcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-arm64"
+  - name_template: "ghcr.io/tcurdt/{{ .ProjectName }}:v{{ .Major }}"
     image_templates:
-    - 'ghcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-amd64'
-    - 'ghcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-arm64'
-
+      - "ghcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-amd64"
+      - "ghcr.io/tcurdt/{{ .ProjectName }}:v{{ .Version }}-arm64"
 
 release:
   name_template: "v{{ .Version }}"
@@ -154,15 +153,15 @@ release:
   # footer: |
 
 checksum:
-  name_template: 'checksums.txt'
+  name_template: "checksums.txt"
 
 changelog:
   sort: asc
   filters:
     exclude:
-      - '^docs:'
-      - '^test:'
-      - '^chore'
+      - "^docs:"
+      - "^test:"
+      - "^chore"
   groups:
     - title: "Dependency updates"
       regexp: '^.*?(feat|fix)\(deps\)!?:.+$'
@@ -181,7 +180,6 @@ changelog:
       order: 400
     - title: "Other"
       order: 9999
-
 # announce:
 #   twitter:
 #     enabled: false
