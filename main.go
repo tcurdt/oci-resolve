@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"strings"
 
@@ -25,12 +24,6 @@ type Registry struct {
 	Pass string `yaml:"pass"`
 }
 
-// type ResolveCmd struct {
-// 	RegistryFiles []string `arg:"-r,--registry,separate" help:"registry file(s)"`
-// 	Images        []string `arg:"-i,--image,separate" help:"image in name:tag format"`
-// 	Output        string   `arg:"-o" help:"Output format (e.g., kustomize, json)" default:"kustomize"`
-// }
-
 type TransformCmd struct {
 	Paths         []string `arg:"positional" help:"path(s)"`
 	RegistryFiles []string `arg:"-r,--registry,separate" help:"registry file(s)"`
@@ -39,8 +32,7 @@ type TransformCmd struct {
 
 var args struct {
 	Transform *TransformCmd `arg:"subcommand:transform"`
-	// Resolve   *ResolveCmd   `arg:"subcommand:resolve"`
-	Verbose bool `arg:"--verbose" help:"verbose output" default:"false"`
+	LogLevel  string        `arg:"--log" help:"log level" default:"info"`
 }
 
 func parseRegistries(filenames []string) ([]Registry, error) {
@@ -48,7 +40,7 @@ func parseRegistries(filenames []string) ([]Registry, error) {
 
 	for _, filename := range filenames {
 
-		data, err := ioutil.ReadFile(filename)
+		data, err := os.ReadFile(filename)
 		if err != nil {
 			return []Registry{}, err
 		}
@@ -105,15 +97,31 @@ func parseImages(values []string) ([]Image, error) {
 	return images, nil
 }
 
-// func kustomize(resolved map[Image]string) {
-// 	for image, sha := range resolved {
-// 		fmt.Printf("kustomize edit set image %s=%s:%s\n", image.String(), image.Name, sha)
-// 	}
-// }
+func parseLogLevel(level string) (Level, error) {
+	switch strings.ToLower(level) {
+	case "debug":
+		return Debug, nil
+	case "info":
+		return Info, nil
+	case "warn":
+		return Warn, nil
+	case "error":
+		return Error, nil
+	default:
+		return Info, fmt.Errorf("invalid log level: %s", level)
+	}
+}
 
 func main() {
 
 	arg.MustParse(&args)
+
+	level, err := parseLogLevel(args.LogLevel)
+	if err != nil {
+		LogError("error parsing log level: %v", err)
+		os.Exit(1)
+	}
+	SetLogLevel(level)
 
 	switch {
 	case args.Transform != nil:
@@ -130,14 +138,13 @@ func main() {
 			os.Exit(1)
 		}
 
-		LogInfo("registries: %v", registries)
-		LogInfo("images: %v", images)
+		LogDebug("registries: %v", registries)
+		LogDebug("images: %v", images)
 
 		consumers := []Consumer{
 			NewResolveTransformer(registries, images),
 			NewHashTransformer(),
 			NewPrintTransformer(),
-			// NewWriteTransformer(),
 		}
 
 		for _, path := range args.Transform.Paths {
@@ -146,37 +153,6 @@ func main() {
 				os.Exit(1)
 			}
 		}
-
-	// case args.Resolve != nil:
-
-	// 	registries, err := parseRegistries(args.Resolve.RegistryFiles)
-	// 	if err != nil {
-	// 		LogError("error parsing registries: %v", err)
-	// 		os.Exit(1)
-	// 	}
-
-	// 	images, err := parseImages(args.Resolve.Images)
-	// 	if err != nil {
-	// 		LogError("error parsing images: %v", err)
-	// 		os.Exit(1)
-	// 	}
-
-	// 	LogInfo("registries: %v", registries)
-	// 	LogInfo("images: %v", images)
-	// 	LogInfo("output: %s", args.Resolve.Output)
-
-	// 	resolved, err := resolveImages(registries, images)
-	// 	if err != nil {
-	// 		LogError("error resolving images: %v", err)
-	// 		os.Exit(1)
-	// 	}
-	// 	if args.Resolve.Output == "kustomize" {
-	// 		kustomize(resolved)
-	// 		return
-	// 	}
-
-	// 	LogError("unknown output format: %v", args.Resolve.Output)
-	// 	os.Exit(1)
 
 	default:
 		LogError("unknown command")

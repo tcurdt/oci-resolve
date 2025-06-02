@@ -71,7 +71,7 @@ func (c *ResolveTransformer) processMappingNode(node *yaml.Node, path []string) 
 				// check if annotation
 
 				if c.hasCommentTag(valueNode) {
-					LogInfo("found image %v %s (%s)\n", fullPath, valueNode.Value, valueNode.LineComment)
+					LogDebug("found image %v %s (%s)\n", fullPath, valueNode.Value, valueNode.LineComment)
 					image, err := parseImage(valueNode.Value)
 					if err != nil {
 						return err

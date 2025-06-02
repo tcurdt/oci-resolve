@@ -6,7 +6,6 @@ import (
 
 	"github.com/regclient/regclient"
 	"github.com/regclient/regclient/config"
-	"github.com/regclient/regclient/types"
 	"github.com/regclient/regclient/types/manifest"
 	"github.com/regclient/regclient/types/platform"
 	"github.com/regclient/regclient/types/ref"
@@ -50,17 +49,17 @@ func or(a string, b string) string {
 	return b
 }
 
-func resolveImages(registries []Registry, images []Image) (map[Image]string, error) {
-	results := map[Image]string{}
-	for _, image := range images {
-		sha, err := resolveImage(registries, image)
-		if err != nil {
-			return results, err
-		}
-		results[image] = sha
-	}
-	return results, nil
-}
+// func resolveImages(registries []Registry, images []Image) (map[Image]string, error) {
+// 	results := map[Image]string{}
+// 	for _, image := range images {
+// 		sha, err := resolveImage(registries, image)
+// 		if err != nil {
+// 			return results, err
+// 		}
+// 		results[image] = sha
+// 	}
+// 	return results, nil
+// }
 
 func resolveImage(registries []Registry, image Image) (string, error) {
 
@@ -95,7 +94,7 @@ func resolveImage(registries []Registry, image Image) (string, error) {
 
 	needle := image.String()
 
-	LogInfo("resolving image [%s] (name=%s tag=%s)", needle, image.Name, image.Tag)
+	LogDebug("resolving image [%s] (name=%s tag=%s)", needle, image.Name, image.Tag)
 
 	r, err := ref.New(needle)
 	if err != nil {
@@ -121,10 +120,13 @@ func resolveImage(registries []Registry, image Image) (string, error) {
 	}
 
 	m, err = rc.ManifestGet(ctx, r, regclient.WithManifestDesc(*desc))
+	if err != nil {
+		return "", fmt.Errorf("failed running ManifestGet: %v", err)
+	}
 
 	mi, ok := m.(manifest.Imager)
 	if !ok {
-		return "", fmt.Errorf("manifest does not support image methods%.0w", types.ErrUnsupportedMediaType)
+		return "", fmt.Errorf("manifest does not support image methods")
 	}
 
 	cd, err := mi.GetConfig()
