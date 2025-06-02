@@ -149,7 +149,7 @@ func main() {
 
 		for _, path := range args.Transform.Paths {
 			if err := traversePath(path, consumers); err != nil {
-				LogError("error processing directory %q: %v\n", path, err)
+				LogError("error processing directory %q: %v", path, err)
 				os.Exit(1)
 			}
 		}

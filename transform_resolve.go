@@ -65,13 +65,13 @@ func (c *ResolveTransformer) processMappingNode(node *yaml.Node, path []string) 
 
 			if keyNode.Kind == yaml.ScalarNode && keyNode.Value == "image" {
 
-				// fmt.Printf("found image %v %s (%s)\n", fullPath, valueNode.Value, valueNode.LineComment)
+				// fmt.Printf("found image %v %s (%s)", fullPath, valueNode.Value, valueNode.LineComment)
 
 				// check if matches images
 				// check if annotation
 
 				if c.hasCommentTag(valueNode) {
-					LogDebug("found image %v %s (%s)\n", fullPath, valueNode.Value, valueNode.LineComment)
+					LogDebug("found image %v %s (%s)", fullPath, valueNode.Value, valueNode.LineComment)
 					image, err := parseImage(valueNode.Value)
 					if err != nil {
 						return err
@@ -82,7 +82,7 @@ func (c *ResolveTransformer) processMappingNode(node *yaml.Node, path []string) 
 						return nil
 						// return err
 					}
-					LogInfo("resolved image [%v] => %s\n", image.String(), resolved)
+					LogInfo("resolved image [%v] => %s", image.String(), resolved)
 					valueNode.Value = Image{image.Name, resolved}.String()
 					return nil
 				}

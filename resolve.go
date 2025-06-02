@@ -69,25 +69,15 @@ func resolveImage(registries []Registry, image Image) (string, error) {
 			Name: registry.Name,
 			User: registry.User,
 			Pass: registry.Pass,
-			// ReqPerSec: 100,
-			// ReqConcurrent: 10,
 		}
-
-		// fmt.Printf("Name: %s\n", host.Name)
-		// fmt.Printf("User: %s\n", host.User)
-		// fmt.Printf("Pass: %s\n", host.Pass)
 
 		hosts = append(hosts, host)
 	}
 
 	ctx := context.Background()
 
-	// delayInit, _ := time.ParseDuration("0.05s")
-	// delayMax, _ := time.ParseDuration("0.10s")
-
 	rc := regclient.New(
 		regclient.WithConfigHost(hosts...),
-		// WithRetryDelay(delayInit, delayMax),
 	)
 
 	// regctl image inspect ghcr.io/aquasecurity/trivy:latest
@@ -110,8 +100,6 @@ func resolveImage(registries []Registry, image Image) (string, error) {
 	// 	// Unexpected media type: application/vnd.docker.distribution.manifest.list.v2+json
 	// 	// return fmt.Errorf("Unexpected media type: %s", manifest.GetMediaType(m)).Error()
 	// }
-
-	// fmt.Printf("isList=%@\n", m.IsList())
 
 	plat := platform.Local()
 	desc, err := manifest.GetPlatformDesc(m, &plat)
