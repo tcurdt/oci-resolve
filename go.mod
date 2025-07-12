@@ -5,7 +5,7 @@ go 1.23.0
 toolchain go1.24.5
 
 require (
-	github.com/alexflint/go-arg v1.5.1
+	github.com/alexflint/go-arg v1.6.0
 	github.com/regclient/regclient v0.9.0
 	gopkg.in/yaml.v3 v3.0.1
 )
