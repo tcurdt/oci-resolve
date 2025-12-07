@@ -27,6 +27,8 @@ github.com/regclient/regclient v0.10.0 h1:V+mbcd/PBwQkd89M2KAPAAC1qMyrw9f5BKvCtP
 github.com/regclient/regclient v0.10.0/go.mod h1:fDYvRK2yFUE7pyEXKj+jKzTAtuwXsGQ6Tr0KPvxwP00=
 github.com/regclient/regclient v0.11.0 h1:5HibEqBV9jwgmcbFGAXiTbfk85F7YEeNH52pUIVfRjc=
 github.com/regclient/regclient v0.11.0/go.mod h1:vgblZTw50tGVxIMgYr8uHCAmIZx2gBQS/dPaQNngSeg=
+github.com/regclient/regclient v0.11.1 h1:MtxUaEVh2bgBzAX9wqH71cB4NWom4EdZ/31Z9f7ZwCU=
+github.com/regclient/regclient v0.11.1/go.mod h1:4Wu8lxr/v0QzrIId6cJj/2BH8gP3dUHes37lZJP0J90=
 github.com/sirupsen/logrus v1.9.3 h1:dueUQJ1C2q9oE3F7wvmSGAaVtTmUizReu6fjN8uqzbQ=
 github.com/sirupsen/logrus v1.9.3/go.mod h1:naHLuLoDiP4jHNo9R0sCBMtWGeIprob74mVsIT4qYEQ=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
