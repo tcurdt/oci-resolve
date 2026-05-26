@@ -6,7 +6,7 @@ toolchain go1.26.3
 
 require (
 	github.com/alexflint/go-arg v1.6.1
-	github.com/regclient/regclient v0.11.4
+	github.com/regclient/regclient v0.11.5
 	gopkg.in/yaml.v3 v3.0.1
 )
 
@@ -18,5 +18,5 @@ require (
 	github.com/sirupsen/logrus v1.9.4 // indirect
 	github.com/stretchr/testify v1.10.0 // indirect
 	github.com/ulikunitz/xz v0.5.15 // indirect
-	golang.org/x/sys v0.44.0 // indirect
+	golang.org/x/sys v0.45.0 // indirect
 )
