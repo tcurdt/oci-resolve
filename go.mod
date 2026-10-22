@@ -2,7 +2,7 @@ module vafer.org/oci-resolve
 
 go 1.26.0
 
-toolchain go1.27.2
+toolchain go1.27.3
 
 require (
 	github.com/alexflint/go-arg v1.6.1
